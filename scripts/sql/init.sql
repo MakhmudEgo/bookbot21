@@ -21,8 +21,6 @@ CREATE TABLE users
     updated_at  TIMESTAMP     NOT NULL DEFAULT now()
 );
 
-
-
 INSERT INTO campus(name)
 VALUES ('Москва'),
        ('Казань'),
@@ -46,12 +44,6 @@ CREATE TABLE category
     update_at TIMESTAMP    NOT NULL DEFAULT now()
 );
 
-INSERT INTO category(name, type)
-VALUES ('Переговорные', 'places'),
-       ('Кухни', 'places'),
-       ('Игровые', 'places'),
-       ('книги', 'inventory');
-
 CREATE TABLE places
 (
     id          SERIAL PRIMARY KEY,
@@ -66,11 +58,6 @@ CREATE TABLE places
     create_at   TIMESTAMP NOT NULL DEFAULT now(),
     update_at   TIMESTAMP NOT NULL DEFAULT now()
 );
-INSERT INTO places(name, description, campus_id, category_id, floor, room, period, permission)
-VALUES ('Плазма', 'Большая переговорная с телевизором и интерактивной доской', 1, 1, 1, 100, '1 hours'::interval,
-        'student'),
-       ('Кухня X', 'Кухня для АДМ', 1, 2, 3, 313, 'hour 1', 'student'),
-       ('Игровая Люси', 'Игровая с пс4', 1, 3, 2, 213, 'hour 1', 'student');
 
 CREATE TABLE inventory
 (
@@ -99,3 +86,21 @@ CREATE TABLE bookings
     create_at    TIMESTAMP    NOT NULL DEFAULT now(),
     update_at    TIMESTAMP    NOT NULL DEFAULT now()
 );
+
+INSERT INTO inventory(id, name, description, campus_id, category_id, period, permission, create_at, updated_at)
+VALUES
+('ракетка', 'для игры в большой и малый теннис...', 1, 3, '1 hours'::interval, 'student', now(), now + interval '3 minute'),
+('кружка', 'для распития чайных напитков', 1, 3, '1 hours'::interval, 'student', now() + interval '1 hour', now + interval '3 minute' + interval '1 hour'),
+('метла', 'для игры в квиддич', 1, 3, '1 hours'::interval, 'student', now() + interval '1 hour', now + interval '3 minute' + interval '1 hour')
+
+INSERT INTO category(name, type)
+VALUES ('Переговорные', 'places'),
+       ('Кухни', 'places'),
+       ('Игровые', 'places'),
+       ('книги', 'inventory');
+
+INSERT INTO places(name, description, campus_id, category_id, floor, room, period, permission)
+VALUES ('Плазма', 'Большая переговорная с телевизором и интерактивной доской', 1, 1, 1, 100, '1 hours'::interval,
+        'student'),
+       ('Кухня X', 'Кухня для АДМ', 1, 2, 3, 313, 'hour 1', 'student'),
+       ('Игровая Люси', 'Игровая с пс4', 1, 3, 2, 213, 'hour 1', 'student');
